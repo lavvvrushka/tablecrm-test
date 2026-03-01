@@ -31,7 +31,7 @@ export function PricingCategoryCard({
         <CardTitle>Цены и категория</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
           <div className="space-y-1.5">
             <Label htmlFor="marketplace_price">
               Цена на маркетплейсе, ₽ *
@@ -116,7 +116,7 @@ export function PricingCategoryCard({
           </div>
         </div>
 
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
           <div className="space-y-1.5">
             <Label htmlFor="category">Категория *</Label>
             <Select

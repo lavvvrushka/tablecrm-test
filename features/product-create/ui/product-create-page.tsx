@@ -158,55 +158,31 @@ export function ProductCreatePage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <header className="border-b px-6 py-4 flex items-center justify-between">
-        <div>
+    <div className="min-h-screen bg-background flex flex-col min-w-0">
+      <header className="border-b px-4 py-3 sm:px-6 sm:py-4">
+        <div className="min-w-0">
           <p className="text-xs uppercase tracking-wide text-muted-foreground">
             tablecrm · тестовое задание
           </p>
-          <h1 className="text-xl font-semibold">
+          <h1 className="text-lg font-semibold truncate sm:text-xl">
             Создание карточки товара
           </h1>
         </div>
-        <div className="flex gap-2">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={handleAutoFromName}
-          >
-            Автозаполнение по названию
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={handleGenerateSeo}
-          >
-            Сгенерировать SEO
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            onClick={handlePrettifyDescriptions}
-          >
-            Причесать описания
-          </Button>
-        </div>
       </header>
 
-      <main className="flex-1 px-6 py-6">
+      <main className="flex-1 px-4 py-4 sm:px-6 sm:py-6 min-w-0 pb-20 sm:pb-6">
         <form
-          className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.2fr)]"
+          className="grid gap-4 sm:gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.2fr)] min-w-0"
           onSubmit={handleSubmit}
         >
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6 min-w-0 lg:col-span-2">
             <BasicInfoCard
               form={form}
               errors={errors}
               onChange={handleChange}
               onGenerateSku={handleGenerateSku}
+              onAutoFromName={handleAutoFromName}
+              onPrettifyDescriptions={handlePrettifyDescriptions}
             />
 
             <PricingCategoryCard
@@ -215,14 +191,13 @@ export function ProductCreatePage() {
               marketplacePriceNumber={marketplacePriceNumber}
               onChange={handleChange}
             />
-          </div>
 
-          <div className="space-y-6">
             <SeoCard
               form={form}
               isOpen={isSeoOpen}
               onToggle={() => setIsSeoOpen((prev) => !prev)}
               onChange={handleChange}
+              onGenerateSeo={handleGenerateSeo}
             />
 
             <LocationCard
@@ -230,12 +205,12 @@ export function ProductCreatePage() {
               onChange={handleChange}
             />
 
-            <div className="flex flex-col gap-3">
-              <div className="flex items-center justify-between gap-4">
-                <div />
+            <div className="flex flex-col gap-3 border-t pt-6">
+              <div className="flex flex-col-reverse items-stretch gap-3 sm:flex-row sm:items-center sm:justify-end">
                 <Button
                   type="submit"
                   disabled={isSubmitting}
+                  className="w-full sm:w-auto hidden sm:block"
                 >
                   {isSubmitting
                     ? "Создаём товар..."
@@ -244,12 +219,12 @@ export function ProductCreatePage() {
               </div>
 
               {submitError && (
-                <p className="text-xs text-destructive">
+                <p className="text-xs text-destructive hidden sm:block">
                   {submitError}
                 </p>
               )}
               {submitSuccess && (
-                <p className="text-xs text-emerald-600">
+                <p className="text-xs text-emerald-600 hidden sm:block">
                   {submitSuccess}
                 </p>
               )}
@@ -257,6 +232,32 @@ export function ProductCreatePage() {
           </div>
         </form>
       </main>
+
+      <div className="fixed bottom-0 left-0 right-0 bg-background border-t p-4 sm:hidden">
+        <Button
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            handleSubmit(e as any);
+          }}
+          disabled={isSubmitting}
+          className="w-full"
+        >
+          {isSubmitting
+            ? "Создаём товар..."
+            : "Создать карточку товара"}
+        </Button>
+        {submitError && (
+          <p className="text-xs text-destructive mt-2 text-center">
+            {submitError}
+          </p>
+        )}
+        {submitSuccess && (
+          <p className="text-xs text-emerald-600 mt-2 text-center">
+            {submitSuccess}
+          </p>
+        )}
+      </div>
     </div>
   );
 }
