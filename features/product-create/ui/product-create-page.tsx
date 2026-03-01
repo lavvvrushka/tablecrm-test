@@ -10,7 +10,7 @@ import {
 import { createNomenclatureItem } from "@/shared/api/tablecrm";
 import { Button } from "@/components/ui/button";
 import type { ProductFormErrors } from "@/features/product-create/types";
-import { prettifyText, buildSeoFromName } from "@/features/product-create/lib";
+import { prettifyText, buildSeoFromName, generateDescriptionsFromName } from "@/features/product-create/lib";
 import { BasicInfoCard } from "@/features/product-create/ui/basic-info-card";
 import { PricingCategoryCard } from "@/features/product-create/ui/pricing-category-card";
 import { SeoCard } from "@/features/product-create/ui/seo-card";
@@ -125,12 +125,14 @@ export function ProductCreatePage() {
     if (!form.name.trim()) return;
 
     const generated = buildSeoFromName(form.name);
+    const descriptions = generateDescriptionsFromName(form.name);
     const normalizedCode = form.code || form.name.replace(/\s+/g, "-").toLowerCase();
 
     setForm((prev) => ({
       ...prev,
       code: normalizedCode,
       ...generated,
+      ...descriptions,
     }));
   };
 
